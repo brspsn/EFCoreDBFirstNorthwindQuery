@@ -210,11 +210,47 @@ namespace efCoreLinqSorgulari
             //    contactInfo = e.FirstName + " " + e.LastName + "can be reached at x" + e.Extension + "."
             //});
 
-            //25--27.sorular yapılacakkkkkk
+            //25-------------------------------
 
             //26.soru
 
+            //var result = context.Employees.Select(e => new
+            //{
 
+            //    HireAgeAccurate=(e.HireDate-e.BirthDate)/365.0,
+            //    HireAgeInnaccurate = e.HireDate.Value.Year - e.BirthDate.Value.Year
+
+
+            //});
+
+            //foreach (var e in result)
+            //{
+            //    Console.WriteLine(e.HireAgeAccurate + "           " + e.HireAgeInnaccurate);
+            //}
+
+            //27.soru
+            //var result = context.Employees.Select(e => new
+            //{
+            //    e.FirstName,
+            //    e.LastName,
+            //    datename = e.BirthDate.Value.ToString("MMMM")
+            //}); ;
+
+            //30.soru 31----32
+            //var result = context.Products.Select(p => new
+            //{
+            //    p.ProductName,
+            //    p.Category.CategoryName
+
+            //}).Where(p => p.CategoryName=="seafood");
+
+            //33.soru
+            //var result = context.Orders.Where(o => o.ShippedDate > o.RequiredDate).Take(37).Select(o => new
+            //{
+            //    o.OrderId,
+            //    o.Employee.FirstName,
+            //    o.Employee.LastName
+            //}).OrderBy(o=>o.LastName).ThenBy(o=>o.FirstName);
 
             //34.soru
 
@@ -222,6 +258,7 @@ namespace efCoreLinqSorgulari
             //{
             //    ProductName = p.ProductName,
             //    totalUnits = p.OrderDetails.Sum(od => od.Quantity)
+
 
             //}).Where(a => a.totalUnits < 200);
             // navitational proporty düzgun olmasaydı
@@ -232,6 +269,28 @@ namespace efCoreLinqSorgulari
             //    totalUnits = OrderDetails.Sum(od => od.Quantity)
             //}).Where(a => a.totalUnits < 200);
             ////34.sorunun sonuuuu
+
+            // 35 soru
+            //var result = context.Orders.Select(o => new
+            //{
+            //    o.Customer.CustomerId,
+            //    o.Customer.CompanyName,
+            //    o.OrderDate,
+            //    o.CustomerId.Count()
+
+            //}).Where(o => o.OrderDate >= DateTime.Parse("1996-12-31"));
+
+
+            //36. soru
+            var result = context.Orders.Select(o => new
+            {
+                companyName = o.Customer.CompanyName,
+                totalprice = o.OrderDetails.Sum(od => (od.Quantity * od.UnitPrice)),
+                o.OrderId
+            }).Where(o => o.totalprice > 10000).GroupBy(o => o.companyName);
+         
+
+
 
 
             /////yeni kayıt oluşturucağımız zaman yeni bir kategori oluşturulup değişiklikleri kaydet diyoruz
@@ -252,30 +311,15 @@ namespace efCoreLinqSorgulari
             //Category category = context.Categories.FirstOrDefault(c => c.CategoryId == 2);
             //category.CategoryName = "Condiments";
             //context.Categories.Update(category);
-            var result = context.Employees.Select(e => new
-            {
-                HireAgeAccurate =CalculateAge(e.HireDate,e.BirthDate),
-                HireAgeInnaccurate = e.HireDate.Value.Year - e.BirthDate.Value.Year
 
-
-            });
-
-            foreach (var e in result)
-            {
-                Console.WriteLine(e.HireAgeAccurate + "           " + e.HireAgeInnaccurate);
-            }
 
         }
 
-        public static int CalculateAge(DateTime HireDate, DateTime BirthDate)
-        {
-            int age =HireDate.Year - BirthDate.Year;
-            if ((HireDate.Month < BirthDate.Month || (HireDate.Month == BirthDate.Month && HireDate.Day < BirthDate.Day)))
-            {
-                age--;
-            }
-            return age;
-        }
+        //public static DateTime CalculateAge(DateTime HireDate, DateTime BirthDate)
+        //{
+        //    DateTime Age = HireDate - BirthDate;
+        //    return Age;
+        //}
 
 
     }
