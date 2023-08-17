@@ -15,9 +15,9 @@ public partial class Product
 
     public string? QuantityPerUnit { get; set; }
 
-    public decimal? UnitPrice { get; set; }
+    public decimal UnitPrice { get; set; }
 
-    public short? UnitsInStock { get; set; }
+    public decimal UnitsInStock { get; set; }
 
     public short? UnitsOnOrder { get; set; }
 

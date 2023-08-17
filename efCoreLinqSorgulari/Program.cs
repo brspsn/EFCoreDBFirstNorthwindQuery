@@ -172,6 +172,13 @@ namespace efCoreLinqSorgulari
             //19.soru
 
             //there are have little problem ask your manager please!!!!!!!!!!!!!!!!!!!!!!!!
+            //var result = context.Products.Where(P => P.Supplier.ContactName == "Tokyo Traders" || P.Supplier.ContactName == "Exotic Liquids").Select(p => new
+            //{
+            //    p.SupplierId,
+            //    p.ProductName
+            //});
+
+
 
             ////20.soru
             //var result = context.Orders.Where(o => o.ShipPostalCode.StartsWith("02389")).Select(o => new
@@ -210,7 +217,14 @@ namespace efCoreLinqSorgulari
             //    contactInfo = e.FirstName + " " + e.LastName + "can be reached at x" + e.Extension + "."
             //});
 
-            //25-------------------------------
+            //25
+
+            //var result = context.Products.Select(p => new
+            //{
+            //    Totalprice = p.UnitPrice * p.UnitsInStock,
+            //    TotalPriceroundedDown = Math.Floor(p.UnitPrice * p.UnitsInStock),
+            //    TotalPriceroundedUp = Math.Ceiling(p.UnitPrice * p.UnitsInStock)
+            //});
 
             //26.soru
 
@@ -237,12 +251,12 @@ namespace efCoreLinqSorgulari
             //}); ;
 
             //30.soru 31----32
-            //var result = context.Products.Select(p => new
+            //var result = context.Products.Where(p => p.Category.CategoryName == "seafood").Select(p => new
             //{
             //    p.ProductName,
             //    p.Category.CategoryName
 
-            //}).Where(p => p.CategoryName=="seafood");
+            //});
 
             //33.soru
             //var result = context.Orders.Where(o => o.ShippedDate > o.RequiredDate).Take(37).Select(o => new
@@ -261,6 +275,8 @@ namespace efCoreLinqSorgulari
 
 
             //}).Where(a => a.totalUnits < 200);
+
+            ///2.yöntem
             // navitational proporty düzgun olmasaydı
 
             //var result = context.Products.GroupJoin(context.OrderDetails, p => p.ProductId, od => od.ProductId, (Product, OrderDetails) => new
@@ -268,27 +284,32 @@ namespace efCoreLinqSorgulari
             //    ProductName = Product.ProductName,
             //    totalUnits = OrderDetails.Sum(od => od.Quantity)
             //}).Where(a => a.totalUnits < 200);
-            ////34.sorunun sonuuuu
 
-            // 35 soru
+
+            ////35 soru
+            //var result = context.Customers.GroupJoin(context.Orders.Where(o => o.OrderDate >= DateTime.Parse("1996-12-31")), c => c.CustomerId, o => o.CustomerId, (customer, orders) => new
+            //{
+            //    ordercount=orders.Count(),
+            //    companyName=customer.CompanyName
+
+            //}).Where(x=>x.ordercount>15);
+
+
+            //2.yöntem
+            
+            
+            //sınıflardakilerden allllll
+
+            ////36. soru
             //var result = context.Orders.Select(o => new
             //{
-            //    o.Customer.CustomerId,
-            //    o.Customer.CompanyName,
-            //    o.OrderDate,
-            //    o.CustomerId.Count()
-
-            //}).Where(o => o.OrderDate >= DateTime.Parse("1996-12-31"));
+            //    companyName = o.Customer.CompanyName,
+            //    totalprice = o.OrderDetails.Sum(od => (od.Quantity * od.UnitPrice)),
+            //    o.OrderId
+            //}).Where(o => o.totalprice > 10000);
 
 
-            //36. soru
-            var result = context.Orders.Select(o => new
-            {
-                companyName = o.Customer.CompanyName,
-                totalprice = o.OrderDetails.Sum(od => (od.Quantity * od.UnitPrice)),
-                o.OrderId
-            }).Where(o => o.totalprice > 10000).GroupBy(o => o.companyName);
-         
+
 
 
 
